@@ -12,7 +12,9 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  // static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.USER_DETAIL;
+  
 
   static final routes = [
     GetPage(
@@ -22,7 +24,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.USER_DETAIL,
-      page: () => const UserDetailView(),
+      page: () => UserDetailView(),
       binding: UserDetailBinding(),
     ),
     GetPage(

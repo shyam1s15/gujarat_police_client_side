@@ -20,4 +20,6 @@ class UserDetailController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  void createUserNameInStorage(String text, String text2) {}
 }
