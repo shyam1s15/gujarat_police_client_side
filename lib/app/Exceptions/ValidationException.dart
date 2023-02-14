@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class ValidationException implements Exception {
   String? cause;
-  ValidationException({this.cause});
+  ValidationException(String s, {this.cause});
 
   final validationSnackBar = Get.snackbar(
     "warning",

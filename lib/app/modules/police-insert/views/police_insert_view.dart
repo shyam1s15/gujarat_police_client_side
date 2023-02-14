@@ -15,7 +15,7 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
       ),
       body: Center(
         child: Text(
-          'PoliceInsertView is working',
+          controller.policeName,
           style: TextStyle(fontSize: 20),
         ),
       ),

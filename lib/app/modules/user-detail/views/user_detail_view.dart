@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:gujarat_police_client_side/app/routes/app_pages.dart';
 
 import '../controllers/user_detail_controller.dart';
 
@@ -15,38 +16,50 @@ class UserDetailView extends GetView<UserDetailController> {
           title: const Text('UserDetailView'),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Text("User Name"),
-            TextField(
-              controller: userNameTextFieldController,
-            ),
-            Text("Phone Number"),
-            TextField(
-              controller: phoneNumberTextFieldController,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.red,
-                padding: EdgeInsets.all(16),
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+        body: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            
+            children: [
+              Text("User Name"),
+              TextField(
+                controller: userNameTextFieldController,
               ),
-              onPressed: () {
-                controller.createUserNameInStorage(userNameTextFieldController.text, phoneNumberTextFieldController.text);
-              },
-              child: const Text(
-                "Elevated Button",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
+              Text("Phone Number"),
+              TextField(
+                controller: phoneNumberTextFieldController,
               ),
-            )
-          ],
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.red,
+                  padding: EdgeInsets.all(16),
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () {
+                  bool isValid = controller.createUserNameInStorage(
+                      userNameTextFieldController.text,
+                      phoneNumberTextFieldController.text);
+        
+                  if (isValid != null && isValid) {
+                    Get.toNamed(Routes.POLICE_INSERT);
+                  }
+                },
+                child: const Text(
+                  "Welcome, Press to insert police",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
+          ),
         ));
   }
 }
