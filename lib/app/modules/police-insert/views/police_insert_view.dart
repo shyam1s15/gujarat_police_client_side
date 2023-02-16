@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/police_insert_controller.dart';
+import 'package:path/path.dart';
 
 class PoliceInsertView extends GetView<PoliceInsertController> {
   const PoliceInsertView({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    controller.pickFile();
+                    controller.pickAndUploadFile();
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue, // Set button color
@@ -43,13 +44,13 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
               ),
 
               Obx(()=>controller.policeFile.value == null ? const CircularProgressIndicator.adaptive()
-              : Text (controller.policeFile.value!.files as String))
+              : Text (controller.filename))
             ],
           ),
           Center(
             child: Text(
-              controller.policeName,
-              style: TextStyle(fontSize: 20),
+              controller.policeName ?? "",
+              style: const TextStyle(fontSize: 20),
             ),
           ),
         ],
