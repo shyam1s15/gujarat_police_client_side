@@ -45,7 +45,7 @@ class UserDetailView extends GetView<UserDetailController> {
                       userNameTextFieldController.text,
                       phoneNumberTextFieldController.text);
         
-                  if (isValid != null && isValid) {
+                  if (isValid) {
                     Get.toNamed(Routes.POLICE_INSERT);
                   }
                 },

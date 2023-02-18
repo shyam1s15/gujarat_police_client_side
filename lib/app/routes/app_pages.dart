@@ -29,7 +29,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.POLICE_INSERT,
-      page: () => const PoliceInsertView(),
+      page: () => PoliceInsertView(),
       binding: PoliceInsertBinding(),
     ),
   ];

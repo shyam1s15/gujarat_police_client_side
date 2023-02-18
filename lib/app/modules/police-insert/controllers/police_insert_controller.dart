@@ -7,8 +7,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:gujarat_police_client_side/app/API/API.dart';
 import 'package:gujarat_police_client_side/app/Exceptions/ValidationException.dart';
 import 'package:gujarat_police_client_side/app/jsonData/Police/police_apis.dart';
+import 'package:gujarat_police_client_side/app/routes/app_pages.dart';
 import 'package:path/path.dart';
 
+import '../../../../util/TextUtils.dart';
 import '../../../Constants/enums.dart';
 
 class PoliceInsertController extends GetxController {
@@ -19,9 +21,18 @@ class PoliceInsertController extends GetxController {
   final user = GetStorage();
 
   String? get policeName => user.read('user-name');
+  String? get policeNumber => user.read('phone-number');
+
+  final password = "".obs;
+
   @override
   void onInit() {
     super.onInit();
+    print(policeName.toString() + policeNumber.toString());
+    if (!TextUtils.notBlankNotEmpty(policeName) ||
+        !TextUtils.notBlankNotEmpty(policeNumber)) {
+      Get.toNamed(Routes.USER_DETAIL);
+    }
   }
 
   @override
@@ -51,7 +62,8 @@ class PoliceInsertController extends GetxController {
   Future<void> pickAndUploadFile() async {
     policeFile.value = await FilePicker.platform.pickFiles();
 
-    if (policeFile.value != null) {
+    if (policeFile.value != null ||
+        TextUtils.notBlankNotEmpty(password.value)) {
       //     policeExcelFile.value = File(policeFile.value!.files.first);
       //     Uint8List? uploadfile = policeFile.value!.files.single.bytes;
       //     filename = basename(policeFile.value!.files.single.name);
@@ -66,8 +78,8 @@ class PoliceInsertController extends GetxController {
       // final url = Uri.parse('http://your-upload-endpoint.com');
       // final request = http.MultipartRequest('POST', url);
 
-      PoliceApi.insertPoliceUsingExcel(
-          API_Decision.BOTH, 1, fileBytes!, filename);
+      PoliceApi.insertPoliceUsingExcel(API_Decision.BOTH, 1, fileBytes!,
+          filename, policeName ?? "", policeNumber ?? "", "0", password.value);
       // request.files.add(http.MultipartFile.fromBytes(
       //   'file',
       //   fileBytes!,
@@ -85,6 +97,11 @@ class PoliceInsertController extends GetxController {
       throw ValidationException("Some Fields are required to upload ")
           .showValidationSnackBar();
     }
+    update();
+  }
+
+  passwordUpdated(String text) {
+    password.value = text;
     update();
   }
 }

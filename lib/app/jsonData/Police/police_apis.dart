@@ -10,13 +10,29 @@ import '../../API/API.dart';
 import '../../Constants/enums.dart';
 
 class PoliceApi {
-  static void insertPoliceUsingExcel(API_Decision showStatus, int eventId,
-      Uint8List? policeFile, String fileName) async {
+  static void insertPoliceUsingExcel(
+      API_Decision showStatus,
+      int eventId,
+      Uint8List? policeFile,
+      String fileName,
+      String userName,
+      String phoneNumber,
+      String accessType,
+      String password) async {
+
+    final Map<String, String> modelApiData = {
+      'event-id': eventId.toString(),
+      'username': userName,
+      'phone-number': phoneNumber,
+      'access-type': accessType,
+      'password': password
+    };
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse(APIConstants.POLICESTATION_URL_UPLOAD_FROM_EXCEL),
+      Uri.parse(APIConstants.POLICE_URL_UPLOAD_FROM_EXCEL),
     );
-    request.fields.assign('event-id', eventId.toString());
+    request.headers.addAll(modelApiData);
+    request.fields['event-id'] = eventId.toString();
     request.files.add(
         http.MultipartFile.fromBytes('file', policeFile!, filename: fileName));
     // request.files
@@ -26,7 +42,7 @@ class PoliceApi {
     print(request.fields);
     print(request.files);
     print(request.headers);
-    
+
     print(response.body);
     if (response.statusCode == 200) {
       final responseJson = jsonDecode(utf8.decode(response.bodyBytes));
@@ -48,7 +64,7 @@ class PoliceApi {
             showStatus == API_Decision.BOTH) {
           Get.snackbar(
             "Failed",
-            responseJson['response']['message'],
+            responseJson['response']['message'] ?? "no message from server",
             icon: const Icon(Icons.cancel_presentation_sharp,
                 color: Colors.white),
             snackPosition: SnackPosition.BOTTOM,
