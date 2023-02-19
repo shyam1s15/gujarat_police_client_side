@@ -12,6 +12,7 @@ import 'package:path/path.dart';
 
 import '../../../../util/TextUtils.dart';
 import '../../../Constants/enums.dart';
+import '../../../holders/get_storage.dart';
 
 class PoliceInsertController extends GetxController {
   //TODO: Implement PoliceInsertController
@@ -20,8 +21,8 @@ class PoliceInsertController extends GetxController {
   String filename = "";
   final user = GetStorage();
 
-  String? get policeName => user.read('user-name');
-  String? get policeNumber => user.read('phone-number');
+  String? get policeName => LocalStorage.getUserName();
+  String? get policeNumber => LocalStorage.getPhoneNumber();
 
   final password = "".obs;
 

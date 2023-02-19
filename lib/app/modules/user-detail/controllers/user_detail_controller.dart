@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gujarat_police_client_side/app/Exceptions/ValidationException.dart';
+import 'package:gujarat_police_client_side/app/holders/get_storage.dart';
 
 class UserDetailController extends GetxController {
   //TODO: Implement UserDetailController
@@ -29,8 +30,8 @@ class UserDetailController extends GetxController {
     if (userName.isEmpty || phoneNumber.isEmpty) {
       throw ValidationException("Some Fields are required").validationSnackBar;
     }
-    user.write('user-name', userName);
-    user.write('phone-number', phoneNumber);
+    LocalStorage.setUserName(userName);
+    LocalStorage.setUserName(userName);
     return true;
   }
 }
