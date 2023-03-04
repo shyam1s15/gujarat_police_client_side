@@ -82,7 +82,6 @@ class PoliceInsertController extends GetxController {
 
       final fileBytes = policeFile.value!.files.single.bytes;
       filename = policeFile.value!.files.single.name;
-      print(fileBytes);
       if (fileBytes == null) {
         throw CustomException("Error reading data").validationSnackBar;
       }
