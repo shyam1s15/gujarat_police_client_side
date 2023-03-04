@@ -6,9 +6,6 @@ import 'package:gujarat_police_client_side/app/holders/get_storage.dart';
 class UserDetailController extends GetxController {
   //TODO: Implement UserDetailController
 
-  final count = 0.obs;
-  final user = GetStorage();
-
   @override
   void onInit() {
     super.onInit();
@@ -24,14 +21,11 @@ class UserDetailController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
-
   bool createUserNameInStorage(String userName, String phoneNumber) {
     if (userName.isEmpty || phoneNumber.isEmpty) {
       throw ValidationException("Some Fields are required").validationSnackBar;
+    } else {
+      return true;
     }
-    LocalStorage.setUserName(userName);
-    LocalStorage.setUserName(userName);
-    return true;
   }
 }

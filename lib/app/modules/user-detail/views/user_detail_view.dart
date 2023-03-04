@@ -46,7 +46,7 @@ class UserDetailView extends GetView<UserDetailController> {
                       phoneNumberTextFieldController.text);
         
                   if (isValid) {
-                    Get.toNamed(Routes.POLICE_INSERT);
+                    Get.toNamed(Routes.POLICE_INSERT, arguments: {'username': userNameTextFieldController.text, 'phone-number': phoneNumberTextFieldController.text});
                   }
                 },
                 child: const Text(

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:gujarat_police_client_side/app/API/API.dart';
+import 'package:gujarat_police_client_side/app/Exceptions/CustomException.dart';
 import 'package:gujarat_police_client_side/app/Exceptions/ValidationException.dart';
 import 'package:gujarat_police_client_side/app/jsonData/Police/police_apis.dart';
 import 'package:gujarat_police_client_side/app/routes/app_pages.dart';
@@ -17,23 +18,29 @@ import '../../../holders/get_storage.dart';
 class PoliceInsertController extends GetxController {
   //TODO: Implement PoliceInsertController
   final policeFile = Rxn<FilePickerResult>();
+  dynamic argumentData = Get.arguments;
+
   // final policeExcelFile = Rxn<File>();
   String filename = "";
-  final user = GetStorage();
 
-  String? get policeName => LocalStorage.getUserName();
-  String? get policeNumber => LocalStorage.getPhoneNumber();
-
+  // final user = GetStorage();
+  // String? get policeName => LocalStorage.getUserName();
+  // String? get policeNumber => LocalStorage.getPhoneNumber();
+  late final String username;
+  late final String phoneNumber;
   final password = "".obs;
 
   @override
   void onInit() {
     super.onInit();
-    print(policeName.toString() + policeNumber.toString());
-    if (!TextUtils.notBlankNotEmpty(policeName) ||
-        !TextUtils.notBlankNotEmpty(policeNumber)) {
-      Get.toNamed(Routes.USER_DETAIL);
-    }
+    // print(policeName.toString() + policeNumber.toString());
+    // if (!TextUtils.notBlankNotEmpty(policeName) ||
+    //     !TextUtils.notBlankNotEmpty(policeNumber)) {
+    //   Get.toNamed(Routes.USER_DETAIL);
+    // }
+    username = argumentData['username'];
+    phoneNumber = argumentData['phone-number'];
+    print(username + " " + phoneNumber);
   }
 
   @override
@@ -61,7 +68,7 @@ class PoliceInsertController extends GetxController {
   // }
 
   Future<void> pickAndUploadFile() async {
-    policeFile.value = await FilePicker.platform.pickFiles();
+    policeFile.value = await FilePicker.platform.pickFiles(withData: true);
 
     if (policeFile.value != null ||
         TextUtils.notBlankNotEmpty(password.value)) {
@@ -75,12 +82,16 @@ class PoliceInsertController extends GetxController {
 
       final fileBytes = policeFile.value!.files.single.bytes;
       filename = policeFile.value!.files.single.name;
+      print(fileBytes);
+      if (fileBytes == null) {
+        throw CustomException("Error reading data").validationSnackBar;
+      }
 
       // final url = Uri.parse('http://your-upload-endpoint.com');
       // final request = http.MultipartRequest('POST', url);
 
       PoliceApi.insertPoliceUsingExcel(API_Decision.BOTH, 1, fileBytes!,
-          filename, policeName ?? "", policeNumber ?? "", "0", password.value);
+          filename, username, phoneNumber, "0", password.value);
       // request.files.add(http.MultipartFile.fromBytes(
       //   'file',
       //   fileBytes!,

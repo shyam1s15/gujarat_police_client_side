@@ -64,7 +64,7 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
           ),
           Center(
             child: Text(
-              controller.policeName ?? "",
+              controller.username,
               style: const TextStyle(fontSize: 20),
             ),
           ),
