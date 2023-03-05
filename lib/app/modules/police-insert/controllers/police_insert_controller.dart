@@ -14,10 +14,14 @@ import 'package:path/path.dart';
 import '../../../../util/TextUtils.dart';
 import '../../../Constants/enums.dart';
 import '../../../holders/get_storage.dart';
+import '../../../jsonData/Event/event_api.dart';
+import '../../../jsonData/Event/event_model.dart';
 
 class PoliceInsertController extends GetxController {
   //TODO: Implement PoliceInsertController
   final policeFile = Rxn<FilePickerResult>();
+  late final selectedEventId = 0.obs;
+  final events = Rxn<List<Event>>();
   dynamic argumentData = Get.arguments;
 
   // final policeExcelFile = Rxn<File>();
@@ -41,6 +45,7 @@ class PoliceInsertController extends GetxController {
     username = argumentData['username'];
     phoneNumber = argumentData['phone-number'];
     print(username + " " + phoneNumber);
+    loadEvents();
   }
 
   @override
@@ -89,7 +94,7 @@ class PoliceInsertController extends GetxController {
       // final url = Uri.parse('http://your-upload-endpoint.com');
       // final request = http.MultipartRequest('POST', url);
 
-      PoliceApi.insertPoliceUsingExcel(API_Decision.BOTH, 1, fileBytes!,
+      PoliceApi.insertPoliceUsingExcel(API_Decision.BOTH, selectedEventId.value, fileBytes,
           filename, username, phoneNumber, "0", password.value);
       // request.files.add(http.MultipartFile.fromBytes(
       //   'file',
@@ -113,6 +118,15 @@ class PoliceInsertController extends GetxController {
 
   passwordUpdated(String text) {
     password.value = text;
+    update();
+  }
+
+  void loadEvents() async {
+    events.value = await EventApi.obtainEvents(API_Decision.Only_Failure);
+    if (events.value != null && events.value!.isNotEmpty) {
+      selectedEventId.value = events.value!.elementAt(0).id!.toInt();
+    }
+    print(events.value);
     update();
   }
 }

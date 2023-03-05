@@ -62,6 +62,7 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
               ),
             ],
           ),
+          
           Center(
             child: Text(
               controller.username,
@@ -72,4 +73,42 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
       ),
     );
   }
+    Widget eventSelectionDropDownWidget() {
+    return Container(
+      height: 45,
+      width: 600,
+      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: Row(
+        children: [
+          SizedBox(
+            height: 35,
+            width: 300,
+            child: DropdownButton(
+                hint: const Text("select event"),
+                value: controller.selectedEventId.value == 0
+                    ? null
+                    : controller.selectedEventId.value,
+                items: controller.events.value?.map((event) {
+                  return DropdownMenuItem(
+                      value: event.id,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Text(
+                          event.eventName.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black38,
+                              fontSize: 18.0),
+                        ),
+                      ));
+                }).toList(),
+                onChanged: (value) {
+                  controller.changeSelectedEvent(value);
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
