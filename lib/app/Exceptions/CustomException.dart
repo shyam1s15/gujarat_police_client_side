@@ -26,4 +26,14 @@ class CustomException implements Exception {
       backgroundColor: Colors.yellow,
     );
   }
+
+  showErrorSnackBar() {
+    Get.snackbar(
+      "Error",
+      cause ?? "Some fields are have Error",
+      icon: const Icon(Icons.pending, color: Colors.white),
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+    );
+  }
 }

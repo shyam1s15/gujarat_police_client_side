@@ -62,21 +62,21 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
               ),
             ],
           ),
-          
           Center(
             child: Text(
               controller.username,
               style: const TextStyle(fontSize: 20),
             ),
           ),
-          Obx(()=> controller.events.value == null ? 
-          const CircularProgressIndicator.adaptive()
-          : eventSelectionDropDownWidget()),
+          Obx(() => controller.events.value == null
+              ? const CircularProgressIndicator.adaptive()
+              : eventSelectionDropDownWidget()),
         ],
       ),
     );
   }
-    Widget eventSelectionDropDownWidget() {
+
+  Widget eventSelectionDropDownWidget() {
     return Container(
       height: 45,
       width: 600,
@@ -113,5 +113,4 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
       ),
     );
   }
-
 }

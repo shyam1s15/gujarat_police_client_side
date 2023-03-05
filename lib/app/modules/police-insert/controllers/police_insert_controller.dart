@@ -2,18 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:file_picker/file_picker.dart';
-import 'package:gujarat_police_client_side/app/API/API.dart';
 import 'package:gujarat_police_client_side/app/Exceptions/CustomException.dart';
 import 'package:gujarat_police_client_side/app/Exceptions/ValidationException.dart';
 import 'package:gujarat_police_client_side/app/jsonData/Police/police_apis.dart';
-import 'package:gujarat_police_client_side/app/routes/app_pages.dart';
-import 'package:path/path.dart';
 
 import '../../../../util/TextUtils.dart';
 import '../../../Constants/enums.dart';
-import '../../../holders/get_storage.dart';
 import '../../../jsonData/Event/event_api.dart';
 import '../../../jsonData/Event/event_model.dart';
 
