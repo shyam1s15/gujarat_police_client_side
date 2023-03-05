@@ -35,7 +35,7 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
                     elevation: 5.0,
                   ),
                   child: const Text(
-                    'Button Text',
+                    'Pick & Upload',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
