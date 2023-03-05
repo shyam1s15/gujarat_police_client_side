@@ -69,6 +69,9 @@ class PoliceInsertView extends GetView<PoliceInsertController> {
               style: const TextStyle(fontSize: 20),
             ),
           ),
+          Obx(()=> controller.events.value == null ? 
+          const CircularProgressIndicator.adaptive()
+          : eventSelectionDropDownWidget()),
         ],
       ),
     );

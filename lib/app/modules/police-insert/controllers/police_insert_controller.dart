@@ -129,4 +129,9 @@ class PoliceInsertController extends GetxController {
     print(events.value);
     update();
   }
+    void changeSelectedEvent(num? value) {
+    selectedEventId.value = value!.toInt();
+    update();
+  }
+
 }
